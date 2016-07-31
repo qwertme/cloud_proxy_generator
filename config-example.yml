@@ -1,7 +1,26 @@
 # Fill this with your own values, save as config.yml
 
+num_proxies: 2
+
 digital_ocean:
   access_token: YOUR-TOKEN-HERE
-
-amazon_aws:
-  # please implement me!
+  # List possible image names using CPG.print_distros
+  # I like Debian.
+  image_name: 'ubuntu-16-04-1-x64'
+  # Smallest, cheapest is good.
+  # We just need the IP address.
+  size: 512mb
+  # Spread em out so we don't freak out mail servers? 
+  # Thank you based cloud.
+  regions:
+    - nyc1
+    - nyc2
+    - nyc3
+    - sfo1
+    - sfo2
+    - ams2
+    - ams3
+    - sgp1
+    - lon1
+    - tor1
+    - fra1

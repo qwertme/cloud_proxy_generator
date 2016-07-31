@@ -2,6 +2,7 @@
 .sass-cache
 *.tmproj
 config.yml
+database.yml
 dump.rdb
 log/*
 tmp/*
