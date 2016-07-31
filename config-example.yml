@@ -1,5 +1,4 @@
 # Fill this with your own values, save as config.yml
-
 num_proxies: 2
 
 digital_ocean:

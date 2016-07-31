@@ -8,7 +8,7 @@ Bundler.require(:default)
 Dir.glob("lib/**/*.rb") {|f| require_relative f}
 
 # Generates number of SOCKS proxies by spinning up
-# cloud servers and enabling SSH tunnels on localhost.
+# Digital Ocean cloud servers and enabling SSH tunnels on localhost.
 class CloudProxyGenerator
   include Singleton
 
@@ -29,6 +29,7 @@ class CloudProxyGenerator
 
   def create_proxies
     create_droplets
+    wait_for_ip_addresses
     create_ssh_tunnels
     print_proxy_addresses
     persist_database
@@ -37,6 +38,9 @@ class CloudProxyGenerator
   def kill_proxies
     kill_ssh_tunnels
     kill_droplets
+  end
+
+  def print_proxy_addresses
   end
 
   # DROPLETS ------------------------------------------------------------------
@@ -55,9 +59,14 @@ class CloudProxyGenerator
       )
       puts "  - #{d_name}"
       created = @d_client.droplets.create(d)
-      add_droplet_to_db(created.id, d_name)
+      add_droplet_to_db(created)
     end
     return droplets
+  end
+
+  # Because creation can be slow we have to wait until 
+  # they're created to grab the IPs.
+  def wait_for_ip_addresses
   end
 
   def kill_droplets
@@ -77,6 +86,9 @@ class CloudProxyGenerator
 
   # SSH TUNNELS ---------------------------------------------------------------
   def create_ssh_tunnels
+    droplets.each do |d|
+      
+    end
   end
 
   def kill_ssh_tunnels
@@ -120,11 +132,14 @@ class CloudProxyGenerator
     File.open(DB_FILE, 'w') { |f| f.write(YAML.dump(@db)) }
   end
 
-  def add_droplet_to_db(id, name)
-    droplets[id] = {
-      'name' => name,
+  # d is a DropletKit::Droplet
+  def add_droplet_to_db(d)
+    droplets[d.id] = {
+      'name' => d.name,
+      #'ip_address' => d.networks,
       'local_port' => STARTING_PROXY_PORT + (droplets.size+1)
     }
+    persist_database
   end
 
   def droplets
