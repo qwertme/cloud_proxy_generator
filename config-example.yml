@@ -1,0 +1,7 @@
+# Fill this with your own values, save as config.yml
+
+digital_ocean:
+  access_token: YOUR-TOKEN-HERE
+
+amazon_aws:
+  # please implement me!

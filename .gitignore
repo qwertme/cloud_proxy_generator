@@ -1,0 +1,8 @@
+.bundle
+.sass-cache
+*.tmproj
+config.yml
+dump.rdb
+log/*
+tmp/*
+vendor/ruby
