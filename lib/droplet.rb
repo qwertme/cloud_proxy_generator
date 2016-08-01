@@ -40,6 +40,18 @@ class CloudProxyGenerator
       end
     end
 
+    def wait_for_active_droplets
+      puts "Waiting for all droplets to turn on..."
+      counter = 0
+      sleep_time = 5
+      until all_droplets_active?
+        sleep(sleep_time)
+        puts "  - Checking again...#{sleep_time * (counter+=1)}s elapsed"
+      end
+      puts "Looks like they're all active. Waiting 10s more to be sure!"
+      sleep 10
+    end
+
     def kill_droplets
       puts "\nDELETING DROPLETS ON DIGITAL OCEAN"
       droplet_records.each do |remote_id, ldr|
@@ -115,6 +127,15 @@ class CloudProxyGenerator
       return true
     end
 
+    # Are all the droplets we have "active" - meaning turned on?
+    # Ready for SSH?
+    def all_droplets_active?
+      droplet_records.values.each do |ldr|
+        drop = find_remote_droplet(ldr.remote_id)
+        return false unless drop && drop.status == 'active'
+      end
+      return true
+    end
 
   end
 end
