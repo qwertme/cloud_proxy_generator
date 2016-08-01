@@ -32,7 +32,6 @@ GEM
     multipart-post (2.0.0)
     resource_kit (0.1.5)
       addressable (~> 2.3.6)
-    ruby-progressbar (1.8.1)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -47,7 +46,6 @@ PLATFORMS
 
 DEPENDENCIES
   droplet_kit
-  ruby-progressbar
 
 BUNDLED WITH
    1.12.1

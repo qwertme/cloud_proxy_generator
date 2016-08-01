@@ -79,7 +79,7 @@ class CloudProxyGenerator
       droplet_records[d.id] = LocalDropletRecord.new(
         remote_id: d.id,
         name: d.name,
-        local_port: STARTING_PROXY_PORT + (droplet_records.size+1)
+        local_port: STARTING_PROXY_PORT + (droplet_records.size)
       )
       persist_database
     end
