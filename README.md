@@ -1,6 +1,6 @@
 # Cloud Proxy Generator
 
-Cloud Proxy Generator is a Ruby script that generates private SOCKS 5 proxies backed by [Digital Ocean VPS servers](https://m.do.co/c/4fba00a6f1fe). Proxies are spread out across all of their available regions, giving you access to multiple IP addresses — worldwide — that can change as you spin proxies up and down. You can spin up 1-N proxies, only limited by the amount of droplets Digital Ocean will let you create.
+Cloud Proxy Generator is a Ruby script that generates private SOCKS 5 proxies backed by [Digital Ocean VPS servers](https://m.do.co/c/4fba00a6f1fe). Proxies are spread out across their available regions, giving you access to multiple IP addresses — worldwide — that can change as you spin proxies up and down. You can spin up 1-N proxies, only limited by the amount of droplets Digital Ocean will let you create.
 
 Something like this comes in handy when you need to…
 
