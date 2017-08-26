@@ -34,5 +34,6 @@ I wrote it to help me [avoid timeout errors validating a list of 400k email addr
 ## How To Use
 
 1. Copy config-example.yml to config.yml, read the comments & edit appropriately
+2. Copy database-example.yml to database.yml 
 2. Run script/run\_until\_killed.rb
 3. Press Ctrl-C when you're done
