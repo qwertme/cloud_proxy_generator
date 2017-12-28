@@ -20,9 +20,19 @@ class CloudProxyGenerator
           # uploaded if you'd like this to work...
           ssh_keys: @d_client.ssh_keys.all.collect { |k| k.fingerprint }
         )
-        puts "  - #{d_name}"
-        created = @d_client.droplets.create(d)
-        add_droplet_record(created)
+        retries = 10
+        begin
+          puts "  - #{d_name}"
+          created = @d_client.droplets.create(d)
+          add_droplet_record(created)
+        rescue DropletKit::Error => e
+          puts e.message
+          puts "...sleeping!"
+          sleep 5
+          if (retries -= 1) > 0
+            retry
+          end
+        end
       end
       return droplet_records
     end
@@ -66,7 +76,7 @@ class CloudProxyGenerator
           puts "...sleeping!"
           sleep 5
           if (retries -= 1) > 0
-            retry 
+            retry
           else
             remove_droplet_record(remote_id)
           end
@@ -80,7 +90,7 @@ class CloudProxyGenerator
     def verify_all_droplets_exist_remotely_or_remove
       return unless droplet_records.size > 0
       puts "Verifying all droplets exist..."
-      droplet_records.keys.each do |remote_id| 
+      droplet_records.keys.each do |remote_id|
         find_remote_droplet(remote_id)
       end
       puts "You currently have #{droplet_records.size} proxy servers alive."

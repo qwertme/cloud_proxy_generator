@@ -3,7 +3,7 @@ class CloudProxyGenerator
 
     def create_ssh_tunnels
       wait_for_active_droplets
-      
+
       puts "Starting SSH tunnels..."
       droplet_records.values.each do |ldr|
         puts "  - #{ldr.name}"
@@ -12,7 +12,10 @@ class CloudProxyGenerator
         ssh_opts << "-o 'StrictHostKeyChecking no' "
         # -D bind address as SOCKS instead of specific port
         ssh_opts << "-D #{ldr.local_port} #{ldr.ip_address} "
-        system("ssh #{ssh_opts} -f -N")
+        while !system("ssh #{ssh_opts} -f -N")
+          puts "Waiting 5 seconds and trying again..."
+          sleep 5
+        end
       end
       puts "Done tunneling!"
     end
